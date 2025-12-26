@@ -1,0 +1,102 @@
+You are a senior full-stack developer and conversion-focused web designer.
+
+Build a modern, fast, mobile-first website for a Canadian construction services company:
+
+Company name: Acorn Constructions Inc.
+Primary services:
+1) Bin Rental (dumpster rental)
+2) Demolition
+3) Excavation
+Also mention: site clean-up, junk removal (if it fits naturally)
+Service area: Greater Toronto Area / York Region (assume Ontario, Canada). Do not hardcode exact cities unless asked, but structure pages so we can add city pages later.
+
+Goal: generate leads via phone + form submissions. Make it look much better than this reference (don’t copy): gfebinrentals.com/brantford-demolition.php
+
+Tech requirements:
+- Use Next.js (App Router) + TypeScript + TailwindCSS.
+- Use responsive design, clean typography, strong spacing.
+- Use a simple component structure.
+- Use SEO best practices: metadata per page, OpenGraph defaults, JSON-LD LocalBusiness schema, semantic headings, alt text.
+- Add basic accessibility (labels, focus states).
+- No backend required. Use a contact form that can be wired later; for now it can POST to a placeholder endpoint or just show a success toast.
+- Include a sticky header with “Call Now” and “Get a Quote”.
+- Add a floating mobile “Call” button.
+- Use placeholder phone number and email clearly marked like: (416) 000-0000 and quotes@acornconstructions.ca so I can replace later.
+- Include a simple “Request a Bin / Request a Quote” form with these fields:
+  Name, Phone, Email, Service needed (Bin Rental / Demolition / Excavation), Address / City, Bin size (10/14/20/40), Material type (Garbage / Dirt / Concrete / Brick), Delivery date, Pickup date, Notes.
+- On submit: show a confirmation message and also create a mailto: link preview with prefilled subject/body (for manual sending).
+
+Site pages (routes):
+- / (Home)
+- /bin-rental
+- /demolition
+- /excavation
+- /pricing
+- /about
+- /contact
+Add a simple /service-areas page that lists example areas (Toronto, Richmond Hill, Markham, Vaughan, Aurora, Newmarket) as placeholders and explains we serve surrounding areas.
+
+Home page sections:
+- Hero: “Bin Rentals, Demolition & Excavation — Fast, Clean, Reliable”
+  Subtext: “Same/next-day delivery available” (make this a soft claim: “often available”).
+  Primary CTA: Get a Quote
+  Secondary CTA: Call Now
+- 3 service cards with icons
+- “Why Choose Us” (Fast delivery, transparent pricing, clean job sites, insured & safety-first)
+- Testimonials (3 placeholders)
+- CTA banner (Quote form link)
+- FAQ accordion (bins + demolition/excavation)
+- Footer with business info
+
+Pricing requirements:
+Create a clear pricing table for bin rental with separate sections and “rules” callouts:
+
+Dimensions:
+- 10 yard: 8’ wide, 8’ long, 4.5’ high
+- 14 yard: 8’ wide, 12’ long, 4.5’ high
+- 20 yard: 8’ wide, 19’ long, 4.5’ high
+- 40 yard: 8’ wide, 20’ long, 8’ high
+
+Construction/garbage ONLY (CANNOT MIX concrete, dirt or brick):
+- 10 yard: $375 flat rate, weight limit 1 ton
+- 14 yard: $425 flat rate, weight limit 2 ton
+- 20 yard: $525 flat rate, weight limit 4 tons
+- 40 yard: $825 flat rate, weight limit 6 tons
+
+Dirt ONLY (cannot mix garbage):
+- 10 yard: $450
+- 14 yard: $550
+
+Concrete ONLY (cannot mix garbage):
+- 10 yard: $350
+- 14 yard: $450
+
+Brick ONLY (cannot mix garbage):
+- 10 yard: $400
+- 14 yard: $550
+
+On the pricing page:
+- Use tabs or clearly separated cards for each material type.
+- Add a “What’s included” section (delivery, pickup, disposal up to weight limit).
+- Add an “Overage” note placeholder (do not invent fees; say “overage fees may apply; confirm on quote”).
+
+Content tone:
+- Professional, straightforward, local service business.
+- No cringe buzzwords.
+- Include a short, honest About section with placeholders for years in business and insured status.
+
+Media:
+- Use placeholder images with descriptive alt text and include a folder /public/images where I can drop real photos later. Use a few nice placeholders in the meantime.
+- Include a simple “Gallery” section on /bin-rental and /demolition using placeholder images.
+
+Deliverables:
+- Provide the full Next.js project structure.
+- Ensure it builds without errors.
+- Include a README with:
+  - how to run dev server
+  - where to change phone/email
+  - where to replace images
+  - how to deploy (Vercel)
+  - list of future improvements (form integration, analytics, Google reviews embed)
+
+Now generate the entire codebase.
