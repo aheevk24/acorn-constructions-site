@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Loader2 } from "lucide-react";
 
 const inquirySchema = z.object({
-  name: z.string().min(1, "Full name is required."),
+  fullName: z.string().min(1, "Full name is required."),
   phone: z.string().min(1, "Phone number is required."),
   email: z.string().min(1, "Email is required."),
   address: z.string().min(1, "Service address is required."),
@@ -33,7 +33,7 @@ export function InquiryForm() {
   const form = useForm<InquiryFormValues>({
     resolver: zodResolver(inquirySchema),
     defaultValues: {
-      name: "",
+      fullName: "",
       phone: "",
       email: "",
       address: "",
@@ -47,47 +47,43 @@ export function InquiryForm() {
     },
   });
 
-  const submitEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT?.trim();
+  const encode = (data: Record<string, string>) => new URLSearchParams(data).toString();
 
   const onSubmit = async (data: InquiryFormValues) => {
-    if (!submitEndpoint) {
-      setSubmitStatus("error");
-      return;
-    }
-
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
     const payload = {
-      fullName: data.name,
+      "form-name": "quote-request",
+      "bot-field": "",
+      fullName: data.fullName,
       phone: data.phone,
       email: data.email,
-      serviceAddress: data.address,
+      address: data.address,
       city: data.city,
       serviceNeeded: data.serviceNeeded,
       binSize: data.binSize || "",
       materialType: data.materialType || "",
-      preferredDeliveryDate: data.deliveryDate || "",
-      preferredPickupDate: data.pickupDate || "",
-      additionalNotes: data.notes || "",
+      deliveryDate: data.deliveryDate || "",
+      pickupDate: data.pickupDate || "",
+      notes: data.notes || "",
     };
 
     try {
-      const response = await fetch(submitEndpoint, {
+      const response = await fetch("/", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify(payload),
+        body: encode(payload),
       });
 
       if (!response.ok) {
-        throw new Error("Formspree submission failed.");
+        throw new Error("Netlify form submission failed.");
       }
 
-      setSubmitStatus("success");
-      form.reset();
+      window.location.assign("/thank-you");
+      return;
     } catch (error) {
       setSubmitStatus("error");
     } finally {
@@ -106,20 +102,28 @@ export function InquiryForm() {
       <CardContent className="p-6">
         <Form {...form}>
           <form
-            action={submitEndpoint}
+            name="quote-request"
             method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            action="/thank-you"
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-4"
           >
+            <input type="hidden" name="form-name" value="quote-request" />
+            <input type="hidden" name="bot-field" />
+            <input type="hidden" name="serviceNeeded" value={serviceType || ""} />
+            <input type="hidden" name="binSize" value={form.watch("binSize") || ""} />
+            <input type="hidden" name="materialType" value={form.watch("materialType") || ""} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="name"
+                name="fullName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Full Name *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your name" {...field} />
+                      <Input placeholder="Your full name" {...field} name="fullName" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -132,7 +136,7 @@ export function InquiryForm() {
                   <FormItem>
                     <FormLabel>Phone Number *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your phone number" {...field} />
+                      <Input placeholder="Your phone number" {...field} name="phone" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -147,7 +151,7 @@ export function InquiryForm() {
                 <FormItem>
                     <FormLabel>Email Address *</FormLabel>
                     <FormControl>
-                    <Input placeholder="you@example.com" type="email" {...field} />
+                    <Input placeholder="you@example.com" type="email" {...field} name="email" />
                     </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -162,7 +166,7 @@ export function InquiryForm() {
                   <FormItem>
                     <FormLabel>Service Address *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Street address" {...field} />
+                      <Input placeholder="Street address" {...field} name="address" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -175,7 +179,7 @@ export function InquiryForm() {
                   <FormItem>
                     <FormLabel>City *</FormLabel>
                     <FormControl>
-                      <Input placeholder="City" {...field} />
+                      <Input placeholder="City" {...field} name="city" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -270,7 +274,7 @@ export function InquiryForm() {
                   <FormItem>
                     <FormLabel>Preferred Delivery Date</FormLabel>
                     <FormControl>
-                      <Input type="date" {...field} value={field.value || ""} />
+                      <Input type="date" {...field} name="deliveryDate" value={field.value || ""} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -283,7 +287,7 @@ export function InquiryForm() {
                   <FormItem>
                     <FormLabel>Preferred Pickup Date</FormLabel>
                     <FormControl>
-                      <Input type="date" {...field} value={field.value || ""} />
+                      <Input type="date" {...field} name="pickupDate" value={field.value || ""} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -302,6 +306,7 @@ export function InquiryForm() {
                       placeholder="Tell us about your project, access restrictions, or special requirements..." 
                       className="resize-none"
                       {...field}
+                      name="notes"
                       value={field.value || ""} 
                     />
                   </FormControl>

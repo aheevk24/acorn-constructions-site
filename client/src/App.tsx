@@ -13,6 +13,7 @@ import Contact from "@/pages/Contact";
 import ServiceAreas from "@/pages/ServiceAreas";
 import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
+import ThankYou from "@/pages/ThankYou";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -29,6 +30,7 @@ function Router() {
         <Route path="/service-areas" component={ServiceAreas} />
         <Route path="/privacy" component={Privacy} />
         <Route path="/terms" component={Terms} />
+        <Route path="/thank-you" component={ThankYou} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
