@@ -11,6 +11,8 @@ import Pricing from "@/pages/Pricing";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import ServiceAreas from "@/pages/ServiceAreas";
+import Privacy from "@/pages/Privacy";
+import Terms from "@/pages/Terms";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -25,6 +27,8 @@ function Router() {
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         <Route path="/service-areas" component={ServiceAreas} />
+        <Route path="/privacy" component={Privacy} />
+        <Route path="/terms" component={Terms} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

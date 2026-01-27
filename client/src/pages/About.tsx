@@ -1,11 +1,26 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { PageHero } from "@/components/PageHero";
+import { Seo } from "@/components/Seo";
+import { siteImages, siteImageAlts } from "@/assets/siteImages";
 
 export default function About() {
   return (
     <div className="bg-white">
+      <Seo
+        title="About Acorn Constructions | Toronto & GTA"
+        description="Learn about Acorn Constructions in Toronto & the GTA, a reliable bin rental, demolition, and excavation partner focused on safety. Call for a free quote."
+        image={siteImages.hero.about}
+      />
+      <PageHero
+        title="About Our Company"
+        subtitle="A reliable partner for bin rentals, demolition, and excavation throughout Toronto & the GTA."
+        image={siteImages.hero.about}
+        alt={siteImageAlts.hero.about}
+        eyebrow="About"
+      />
+
       <div className="container mx-auto px-4 py-16 max-w-4xl">
-        <h1 className="text-4xl font-display font-bold uppercase mb-8 text-center">About Our Company</h1>
         
         <div className="prose prose-lg mx-auto text-gray-600">
           <p className="lead text-xl text-black font-medium mb-6">

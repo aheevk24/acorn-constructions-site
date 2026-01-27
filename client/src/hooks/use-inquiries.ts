@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { api } from "@shared/routes";
 import { type InsertInquiry } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
@@ -18,10 +18,19 @@ export function useCreateInquiry() {
       });
 
       if (!res.ok) {
-        if (res.status === 400) {
+        // Prefer a server-provided message when available
+        try {
           const error = await res.json();
-          throw new Error(error.message || "Validation failed");
+          const message = (error && (error.message || error.error)) as string | undefined;
+          if (message) throw new Error(message);
+        } catch {
+          // ignore JSON parse errors
         }
+
+        if (res.status === 400) {
+          throw new Error("Validation failed");
+        }
+
         throw new Error("Failed to submit inquiry");
       }
 

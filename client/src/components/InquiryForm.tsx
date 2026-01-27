@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { insertInquirySchema, type InsertInquiry } from "@shared/schema";
-import { useCreateInquiry } from "@/hooks/use-inquiries";
+import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,28 +10,89 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 
+const inquirySchema = z.object({
+  name: z.string().min(1, "Full name is required."),
+  phone: z.string().min(1, "Phone number is required."),
+  email: z.string().min(1, "Email is required."),
+  address: z.string().min(1, "Service address is required."),
+  city: z.string().min(1, "City is required."),
+  serviceNeeded: z.string().min(1, "Service needed is required."),
+  binSize: z.string().optional(),
+  materialType: z.string().optional(),
+  deliveryDate: z.string().optional(),
+  pickupDate: z.string().optional(),
+  notes: z.string().optional(),
+});
+
+type InquiryFormValues = z.infer<typeof inquirySchema>;
+
 export function InquiryForm() {
-  const mutation = useCreateInquiry();
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const form = useForm<InsertInquiry>({
-    resolver: zodResolver(insertInquirySchema),
+  const form = useForm<InquiryFormValues>({
+    resolver: zodResolver(inquirySchema),
     defaultValues: {
       name: "",
       phone: "",
       email: "",
       address: "",
       city: "",
-      serviceNeeded: "Bin Rental",
-      binSize: "14 Yard",
-      materialType: "Garbage",
+      serviceNeeded: "",
+      binSize: "",
+      materialType: "",
+      deliveryDate: "",
+      pickupDate: "",
       notes: "",
     },
   });
 
-  const onSubmit = (data: InsertInquiry) => {
-    mutation.mutate(data, {
-      onSuccess: () => form.reset()
-    });
+  const submitEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT?.trim();
+
+  const onSubmit = async (data: InquiryFormValues) => {
+    if (!submitEndpoint) {
+      setSubmitStatus("error");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    const payload = {
+      fullName: data.name,
+      phone: data.phone,
+      email: data.email,
+      serviceAddress: data.address,
+      city: data.city,
+      serviceNeeded: data.serviceNeeded,
+      binSize: data.binSize || "",
+      materialType: data.materialType || "",
+      preferredDeliveryDate: data.deliveryDate || "",
+      preferredPickupDate: data.pickupDate || "",
+      additionalNotes: data.notes || "",
+    };
+
+    try {
+      const response = await fetch(submitEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Formspree submission failed.");
+      }
+
+      setSubmitStatus("success");
+      form.reset();
+    } catch (error) {
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const serviceType = form.watch("serviceNeeded");
@@ -44,7 +105,12 @@ export function InquiryForm() {
       </CardHeader>
       <CardContent className="p-6">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            action={submitEndpoint}
+            method="POST"
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4"
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -53,7 +119,7 @@ export function InquiryForm() {
                   <FormItem>
                     <FormLabel>Full Name *</FormLabel>
                     <FormControl>
-                      <Input placeholder="John Doe" {...field} />
+                      <Input placeholder="Your name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -66,7 +132,7 @@ export function InquiryForm() {
                   <FormItem>
                     <FormLabel>Phone Number *</FormLabel>
                     <FormControl>
-                      <Input placeholder="(416) 555-0123" {...field} />
+                      <Input placeholder="Your phone number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -79,10 +145,10 @@ export function InquiryForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Address *</FormLabel>
-                  <FormControl>
-                    <Input placeholder="john@example.com" type="email" {...field} />
-                  </FormControl>
+                    <FormLabel>Email Address *</FormLabel>
+                    <FormControl>
+                    <Input placeholder="you@example.com" type="email" {...field} />
+                    </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -96,7 +162,7 @@ export function InquiryForm() {
                   <FormItem>
                     <FormLabel>Service Address *</FormLabel>
                     <FormControl>
-                      <Input placeholder="123 Main St" {...field} />
+                      <Input placeholder="Street address" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -109,7 +175,7 @@ export function InquiryForm() {
                   <FormItem>
                     <FormLabel>City *</FormLabel>
                     <FormControl>
-                      <Input placeholder="Toronto" {...field} />
+                      <Input placeholder="City" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -124,7 +190,7 @@ export function InquiryForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Service Needed *</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} value={field.value || undefined}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select service" />
@@ -149,7 +215,7 @@ export function InquiryForm() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Bin Size (Optional)</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value || undefined}>
+                      <Select onValueChange={field.onChange} value={field.value || undefined}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select size" />
@@ -176,7 +242,7 @@ export function InquiryForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Material Type</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value || undefined}>
+                    <Select onValueChange={field.onChange} value={field.value || undefined}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select material" />
@@ -232,8 +298,8 @@ export function InquiryForm() {
                 <FormItem>
                   <FormLabel>Additional Notes</FormLabel>
                   <FormControl>
-                    <Textarea 
-                      placeholder="Tell us about access restrictions, special requirements, or questions." 
+                      <Textarea 
+                      placeholder="Tell us about your project, access restrictions, or special requirements..." 
                       className="resize-none"
                       {...field}
                       value={field.value || ""} 
@@ -244,8 +310,19 @@ export function InquiryForm() {
               )}
             />
 
-            <Button type="submit" className="w-full btn-primary h-12 text-lg" disabled={mutation.isPending}>
-              {mutation.isPending ? (
+            {submitStatus === "success" && (
+              <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800">
+                Request sent — we’ll get back to you shortly.
+              </div>
+            )}
+            {submitStatus === "error" && (
+              <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                Something went wrong. Please call 416-305-3301.
+              </div>
+            )}
+
+            <Button type="submit" className="w-full btn-primary h-12 text-lg" disabled={isSubmitting}>
+              {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
                 </>

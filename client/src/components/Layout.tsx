@@ -2,7 +2,7 @@ import { Link, useLocation } from "wouter";
 import { useState } from "react";
 import { Menu, X, Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logo from "@assets/logo.jpeg";
+import logo from "@assets/logo.jpeg"; // If this file is a phone screenshot with black bars, we crop via CSS in the header
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -34,17 +34,31 @@ export function Layout({ children }: LayoutProps) {
             <span className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-primary" /> (416) 305-3301
             </span>
-            <span className="flex items-center gap-2">
-              <Mail className="w-4 h-4 text-primary" /> info@example.com
-            </span>
+            <a className="flex items-center gap-2 hover:text-primary transition-colors" href="mailto:acorn.inc3@gmail.com">
+              <Mail className="w-4 h-4 text-primary" /> acorn.inc3@gmail.com
+            </a>
             <span className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-primary" /> Serving GTA & Surrounding Areas
             </span>
           </div>
           <div className="flex gap-4">
              {/* Social placeholders */}
-             <Facebook className="w-4 h-4 hover:text-primary cursor-pointer transition-colors" />
-             <Instagram className="w-4 h-4 hover:text-primary cursor-pointer transition-colors" />
+            <a
+              href="#"
+              aria-label="Facebook"
+              className="hover:text-primary cursor-pointer transition-colors"
+              onClick={(e) => e.preventDefault()}
+            >
+              <Facebook className="w-4 h-4" />
+            </a>
+            <a
+              href="#"
+              aria-label="Instagram"
+              className="hover:text-primary cursor-pointer transition-colors"
+              onClick={(e) => e.preventDefault()}
+            >
+              <Instagram className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </div>
@@ -53,12 +67,19 @@ export function Layout({ children }: LayoutProps) {
       <header className="sticky top-0 z-50 bg-white shadow-md border-b-4 border-primary">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-             <img src={logo} alt="Company Logo" className="h-12 w-auto object-contain" />
-             <div className="hidden lg:block">
-               <span className="block font-display text-xl font-bold leading-none uppercase text-black">Bin Rentals</span>
-               <span className="block font-sans text-xs font-medium tracking-widest text-gray-500 uppercase">Demolition & Excavation</span>
-             </div>
+          <Link href="/" className="flex items-center gap-3" aria-label="Acorn Constructions Inc. Home">
+            <div className="h-12 w-14 overflow-hidden flex items-center justify-center">
+              <img
+                src={logo}
+                alt="Acorn Constructions Inc. logo"
+                className="h-24 w-full object-cover"
+                style={{ objectPosition: "center 60%" }}
+              />
+            </div>
+            <div className="hidden lg:block">
+              <span className="block font-display text-xl font-bold leading-none uppercase text-black">Acorn Constructions Inc.</span>
+              <span className="block font-sans text-xs font-medium tracking-widest text-gray-500 uppercase">Bin Rentals • Demolition • Excavation</span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
@@ -81,7 +102,7 @@ export function Layout({ children }: LayoutProps) {
             </a>
             <Link href="/contact">
               <Button size="lg" className="btn-primary">
-                Get a Quote
+                Get a Free Quote
               </Button>
             </Link>
           </div>
@@ -115,7 +136,7 @@ export function Layout({ children }: LayoutProps) {
                 </a>
                 <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
                   <Button className="w-full btn-primary h-12">
-                    Get a Quote
+                    Get a Free Quote
                   </Button>
                 </Link>
               </div>
@@ -154,7 +175,7 @@ export function Layout({ children }: LayoutProps) {
             <div>
               <h3 className="text-xl font-bold mb-6 text-primary">Quick Links</h3>
               <ul className="space-y-3">
-                {navLinks.slice(0, 5).map(link => (
+                {navLinks.slice(0, 6).map(link => (
                   <li key={link.href}>
                     <Link href={link.href} className="text-gray-400 hover:text-white hover:pl-2 transition-all block">
                       › {link.label}
@@ -200,26 +221,37 @@ export function Layout({ children }: LayoutProps) {
                 </li>
                 <li className="flex items-start gap-3">
                   <Mail className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                  <a href="mailto:info@example.com" className="text-gray-400 hover:text-white">info@example.com</a>
+                  <a href="mailto:acorn.inc3@gmail.com" className="text-gray-400 hover:text-white">acorn.inc3@gmail.com</a>
                 </li>
               </ul>
             </div>
           </div>
 
           <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-            <p>&copy; {new Date().getFullYear()} Bin Rentals & Demolition. All rights reserved.</p>
+            <p className="text-gray-500">
+              Acorn Constructions Inc. • Toronto, ON •{" "}
+              <a href="tel:4163053301" className="hover:text-white">
+                (416) 305-3301
+              </a>{" "}
+              •{" "}
+              <a href="mailto:acorn.inc3@gmail.com" className="hover:text-white">
+                acorn.inc3@gmail.com
+              </a>
+            </p>
+            <p>&copy; {new Date().getFullYear()} Acorn Constructions Inc. All rights reserved.</p>
             <div className="flex gap-6">
-              <a href="#" className="hover:text-white">Privacy Policy</a>
-              <a href="#" className="hover:text-white">Terms of Service</a>
+              <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-white">Terms of Service</Link>
             </div>
           </div>
         </div>
       </footer>
 
       {/* Floating Call Button Mobile */}
-      <a 
+      <a
         href="tel:4163053301"
-        className="md:hidden fixed bottom-6 right-6 z-50 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors animate-bounce"
+        aria-label="Call Acorn Constructions"
+        className="md:hidden fixed bottom-6 right-6 z-50 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors"
       >
         <Phone className="w-6 h-6" />
       </a>

@@ -1,23 +1,24 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { PageHero } from "@/components/PageHero";
+import { Seo } from "@/components/Seo";
+import { siteImages, siteImageAlts } from "@/assets/siteImages";
 
 export default function Excavation() {
   return (
     <div className="bg-white">
-      {/* Page Header */}
-      <div className="bg-gray-900 text-white py-20 relative overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1535732759880-bbd5c7265e3f?q=80&w=2064&auto=format&fit=crop" /* Excavator digging */
-            alt="Excavation" 
-            className="w-full h-full object-cover opacity-30"
-          />
-        </div>
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <h1 className="text-5xl font-display font-bold uppercase mb-4">Excavation Services</h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">Precision digging, grading, and site preparation.</p>
-        </div>
-      </div>
+      <Seo
+        title="Excavation Services Toronto & GTA | Site Prep & Grading | Acorn Constructions"
+        description="Excavation, grading, and site prep in Toronto & the GTA with experienced operators, modern equipment, and clean backfill for builds. Call for a free quote."
+        image={siteImages.hero.excavation}
+      />
+      <PageHero
+        title="Excavation Services"
+        subtitle="Precision digging, grading, and site preparation across the GTA."
+        image={siteImages.hero.excavation}
+        alt={siteImageAlts.hero.excavation}
+        eyebrow="Excavation"
+      />
 
       <div className="container mx-auto px-4 py-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -42,9 +43,9 @@ export default function Excavation() {
             </Link>
           </div>
           <div>
-             <img 
-              src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2070&auto=format&fit=crop" /* Excavator */
-              alt="Excavation Equipment" 
+            <img
+              src={siteImages.sections.excavationDetail}
+              alt={siteImageAlts.sections.excavationDetail}
               className="rounded-lg shadow-xl"
             />
           </div>

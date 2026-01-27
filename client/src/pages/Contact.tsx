@@ -1,13 +1,24 @@
 import { InquiryForm } from "@/components/InquiryForm";
 import { Phone, Mail, Clock } from "lucide-react";
+import { PageHero } from "@/components/PageHero";
+import { Seo } from "@/components/Seo";
+import { siteImages, siteImageAlts } from "@/assets/siteImages";
 
 export default function Contact() {
   return (
     <div className="bg-gray-50 min-h-screen">
-      <div className="bg-black text-white py-16 text-center">
-        <h1 className="text-4xl font-display font-bold uppercase">Contact Us</h1>
-        <p className="text-gray-300 mt-2">Get in touch for quotes, booking, or questions.</p>
-      </div>
+      <Seo
+        title="Contact Acorn Constructions | Get a Quote (416) 305-3301"
+        description="Contact Acorn Constructions in Toronto & the GTA for bin rental, demolition, or excavation. Call (416) 305-3301 or get a free quote today for fast service."
+        image={siteImages.hero.contact}
+      />
+      <PageHero
+        title="Contact Us"
+        subtitle="Get in touch for quotes, booking, or job-site questions across Toronto & the GTA."
+        image={siteImages.hero.contact}
+        alt={siteImageAlts.hero.contact}
+        eyebrow="Contact"
+      />
 
       <div className="container mx-auto px-4 py-12">
         <div className="grid lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
@@ -33,7 +44,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-bold text-gray-900">Email</p>
-                    <a href="mailto:info@example.com" className="text-gray-600 hover:text-primary transition-colors">info@example.com</a>
+                    <a href="mailto:acorn.inc3@gmail.com" className="text-gray-600 hover:text-primary transition-colors">acorn.inc3@gmail.com</a>
                   </div>
                 </div>
 

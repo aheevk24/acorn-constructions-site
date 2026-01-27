@@ -73,9 +73,13 @@ app.use((req, res, next) => {
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
+  const useViteMiddleware =
+    process.env.NODE_ENV !== "production" &&
+    process.env.VITE_DEV_SERVER !== "true";
+
   if (process.env.NODE_ENV === "production") {
     serveStatic(app);
-  } else {
+  } else if (useViteMiddleware) {
     const { setupVite } = await import("./vite");
     await setupVite(httpServer, app);
   }
@@ -85,11 +89,15 @@ app.use((req, res, next) => {
   // this serves both the API and the client.
   // It is the only port that is not firewalled.
   const port = parseInt(process.env.PORT || "5000", 10);
+  const host =
+    process.env.HOST ||
+    (process.env.VITE_DEV_SERVER === "true" ? "127.0.0.1" : "0.0.0.0");
+  const reusePort = process.env.NODE_ENV === "production";
   httpServer.listen(
     {
       port,
-      host: "0.0.0.0",
-      reusePort: true,
+      host,
+      reusePort,
     },
     () => {
       log(`serving on port ${port}`);

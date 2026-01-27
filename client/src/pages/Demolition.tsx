@@ -1,30 +1,31 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { PageHero } from "@/components/PageHero";
+import { Seo } from "@/components/Seo";
+import { siteImages, siteImageAlts } from "@/assets/siteImages";
 
 export default function Demolition() {
   return (
     <div className="bg-white">
-      {/* Page Header */}
-      <div className="bg-gray-900 text-white py-20 relative overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?q=80&w=2070&auto=format&fit=crop" /* Demolition site */
-            alt="Demolition" 
-            className="w-full h-full object-cover opacity-30"
-          />
-        </div>
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <h1 className="text-5xl font-display font-bold uppercase mb-4">Demolition Services</h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">Safe, efficient, and precise demolition for residential and commercial projects.</p>
-        </div>
-      </div>
+      <Seo
+        title="Demolition Services Toronto & GTA | Licensed & Insured | Acorn Constructions"
+        description="Licensed, insured demolition in Toronto & the GTA for interior gut-outs and full tear-downs with safe cleanup and haul-away. Call for a free quote today."
+        image={siteImages.hero.demolition}
+      />
+      <PageHero
+        title="Demolition Services"
+        subtitle="Safe, efficient, and precise demolition for residential and commercial projects."
+        image={siteImages.hero.demolition}
+        alt={siteImageAlts.hero.demolition}
+        eyebrow="Demolition"
+      />
 
       <div className="container mx-auto px-4 py-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1">
-             <img 
-              src="https://pixabay.com/get/g4a9a9a80c0263e4e48e21097ff1ba249a3fb5edcd63220b1ae62831a23cd65761d21668cb2c2ddb2f3a9c1764f46147b65a2515649d21092a3f397cdabd0cea2_1280.jpg" /* Interior demolition */
-              alt="Interior Demolition" 
+            <img
+              src={siteImages.sections.demolitionDetail}
+              alt={siteImageAlts.sections.demolitionDetail}
               className="rounded-lg shadow-xl"
             />
           </div>

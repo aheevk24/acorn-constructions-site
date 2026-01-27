@@ -1,102 +1,233 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { Truck, Hammer, Shovel, CheckCircle, Clock, ShieldCheck, DollarSign, Phone } from "lucide-react";
+import {
+  Truck,
+  Hammer,
+  Shovel,
+  CheckCircle,
+  Clock,
+  ShieldCheck,
+  DollarSign,
+  Phone,
+  MapPin,
+  HardHat,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ServiceCard } from "@/components/ServiceCard";
 import { InquiryForm } from "@/components/InquiryForm";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Seo } from "@/components/Seo";
+import { HeroBackground } from "@/components/HeroBackground";
+import { siteImages, siteImageAlts } from "@/assets/siteImages";
 
 export default function Home() {
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
+    transition: { duration: 0.6 },
   };
 
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="relative bg-black text-white min-h-[600px] flex items-center overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
-          {/* Construction site background */}
-          <img 
-            src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" 
-            alt="Construction Site Excavator" 
-            className="w-full h-full object-cover opacity-50"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
-        </div>
+      <Seo
+        title="Bin Rental, Demolition & Excavation in Toronto & the GTA | Acorn Constructions"
+        description="Bin rental, demolition, and excavation in Toronto & the GTA with fast scheduling, clean job sites, and clear pricing for every project. Get a free quote today."
+        image={siteImages.hero.home}
+      />
 
-        <div className="container mx-auto px-4 relative z-10 grid lg:grid-cols-2 gap-12 items-center py-16">
-          <motion.div {...fadeIn} className="space-y-6">
-            <div className="inline-block bg-primary px-4 py-1 text-sm font-bold uppercase tracking-widest text-white mb-2">
-              Serving the GTA & Surrounding Areas
+      {/* Hero Section */}
+      <section className="relative min-h-[680px] text-white overflow-hidden">
+        <HeroBackground
+          image={siteImages.hero.home}
+          alt={siteImageAlts.hero.home}
+        />
+
+        <div className="container mx-auto px-4 relative z-10 grid lg:grid-cols-[1.15fr_0.85fr] gap-12 items-center py-16">
+          <motion.div {...fadeIn} className="space-y-8">
+            <div className="inline-flex items-center gap-3 bg-white/10 px-4 py-2 rounded-full text-sm uppercase tracking-[0.2em] font-bold">
+              <MapPin className="h-4 w-4 text-primary" />
+              Serving Toronto & the GTA
             </div>
             <h1 className="text-5xl md:text-6xl font-display font-bold uppercase leading-tight">
-              Bin Rentals, <span className="text-primary">Demolition</span> & Excavation
+              Bin Rentals, Demolition & Excavation
             </h1>
-            <p className="text-xl text-gray-300 max-w-lg leading-relaxed">
-              Fast, clean, and reliable service. Same-day or next-day delivery often available. We handle the mess so you don't have to.
+            <p className="text-xl text-gray-200 max-w-lg leading-relaxed">
+              Reliable delivery, job-site cleanup, and heavy equipment support for
+              residential and commercial projects across the GTA.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/contact">
                 <Button size="lg" className="btn-primary text-lg px-8 py-6 h-auto">
                   Get a Free Quote
                 </Button>
               </Link>
-              <Link href="/pricing">
-                <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-black text-lg px-8 py-6 h-auto uppercase font-bold tracking-wider">
-                  View Pricing
+              <a href="tel:4163053301">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="text-white border-white hover:bg-white hover:text-black text-lg px-8 py-6 h-auto uppercase font-bold tracking-wider"
+                >
+                  Call (416) 305-3301
                 </Button>
-              </Link>
+              </a>
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="hidden lg:block"
+            className="bg-black/50 border border-white/10 rounded-2xl p-8 backdrop-blur"
           >
-            <InquiryForm />
+            <div className="flex items-center gap-3 mb-6">
+              <div className="bg-primary/90 text-white p-3 rounded-lg">
+                <HardHat className="h-6 w-6" />
+              </div>
+              <div>
+                <p className="text-sm uppercase tracking-[0.2em] text-gray-300">
+                  Job Site Ready
+                </p>
+                <p className="text-xl font-bold">Fast scheduling & clean drops</p>
+              </div>
+            </div>
+            <ul className="space-y-4 text-gray-200">
+              {[
+                "10–40 yard bins for clean fill, mixed waste, and concrete",
+                "Licensed demolition teams for interior and structural projects",
+                "Excavation for foundations, grading, and site prep",
+                "On-time pickups with driveway protection available",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <CheckCircle className="h-5 w-5 text-primary mt-1" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 grid grid-cols-3 gap-4 text-center">
+              {[
+                { label: "Bins", value: "10–40 yd" },
+                { label: "Turnaround", value: "24–48 hr" },
+                { label: "Coverage", value: "GTA+" },
+              ].map((item) => (
+                <div key={item.label} className="rounded-lg bg-white/10 py-3">
+                  <p className="text-lg font-bold">{item.value}</p>
+                  <p className="text-xs uppercase tracking-widest text-gray-300">
+                    {item.label}
+                  </p>
+                </div>
+              ))}
+            </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Trust Bar */}
+      <section className="bg-white py-10 border-b border-gray-200">
+        <div className="container mx-auto px-4 grid gap-6 md:grid-cols-3">
+          {[
+            {
+              title: "Rapid Delivery",
+              description: "Same or next-day bin drop-offs across Toronto & GTA.",
+              icon: <Clock className="h-6 w-6 text-primary" />,
+            },
+            {
+              title: "Transparent Pricing",
+              description: "Straightforward rates with clear weight limits.",
+              icon: <DollarSign className="h-6 w-6 text-primary" />,
+            },
+            {
+              title: "Safety First",
+              description: "Insured operators and clean, organized job sites.",
+              icon: <ShieldCheck className="h-6 w-6 text-primary" />,
+            },
+          ].map((item) => (
+            <div
+              key={item.title}
+              className="flex items-start gap-4 rounded-xl border border-gray-200 p-6 shadow-sm"
+            >
+              <div className="bg-primary/10 p-3 rounded-lg">{item.icon}</div>
+              <div>
+                <p className="text-lg font-bold">{item.title}</p>
+                <p className="text-gray-600">{item.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Services Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16 max-w-2xl mx-auto">
-            <h2 className="text-primary font-bold tracking-widest uppercase mb-2">Our Services</h2>
-            <h3 className="text-4xl font-display font-bold text-gray-900 mb-4">Construction & Disposal Solutions</h3>
-            <p className="text-gray-600">
-              From small residential cleanups to large commercial demolitions, we have the equipment and expertise to get the job done right.
-            </p>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+            <div className="max-w-2xl">
+              <h2 className="text-primary font-bold tracking-widest uppercase mb-2">
+                Core Services
+              </h2>
+              <h3 className="text-4xl font-display font-bold text-gray-900 mb-4">
+                Built for clean jobsites and tight schedules
+              </h3>
+            </div>
+            <Link href="/contact">
+              <Button size="lg" className="btn-primary">
+                Book a Site Visit
+              </Button>
+            </Link>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <ServiceCard 
+          <div className="grid lg:grid-cols-3 gap-8">
+            <ServiceCard
               title="Bin Rental"
-              description="Various sizes available (10, 14, 20, 40 yards) for all your waste disposal needs. Mixed waste, clean fill, concrete, and more."
-              image="https://images.unsplash.com/photo-1595245862217-158863f82023?q=80&w=2070&auto=format&fit=crop" /* Dumpster image */
+              description="Driveway-friendly bins for renovations, clean fill, concrete, and mixed waste. Sizes from 10 to 40 yards."
+              image={siteImages.sections.homeServices.binRental}
+              imageAlt={siteImageAlts.sections.homeServices.binRental}
               icon={<Truck className="w-6 h-6" />}
               link="/bin-rental"
             />
-            <ServiceCard 
+            <ServiceCard
               title="Demolition"
-              description="Safe and efficient demolition services for residential and commercial properties. Interior gut-outs, structural demolition, and more."
-              image="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=2070&auto=format&fit=crop" /* Demolition image */
+              description="Selective interior or full-structure demolition with safe haul-away and debris management."
+              image={siteImages.sections.homeServices.demolition}
+              imageAlt={siteImageAlts.sections.homeServices.demolition}
               icon={<Hammer className="w-6 h-6" />}
               link="/demolition"
             />
-            <ServiceCard 
+            <ServiceCard
               title="Excavation"
-              description="Professional excavation, grading, and site preparation. We have the heavy machinery to handle digging projects of any scale."
-              image="https://images.unsplash.com/photo-1579769363026-64c843026850?q=80&w=2069&auto=format&fit=crop" /* Excavator image */
+              description="Foundation digs, grading, trenching, and site prep done with modern equipment and experienced operators."
+              image={siteImages.sections.homeServices.excavation}
+              imageAlt={siteImageAlts.sections.homeServices.excavation}
               icon={<Shovel className="w-6 h-6" />}
               link="/excavation"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Quote Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
+          <div className="relative">
+            <div className="absolute -inset-4 bg-primary/10 rounded-2xl"></div>
+            <img
+              src={siteImages.sections.binRentalDetail}
+              alt={siteImageAlts.sections.binRentalDetail}
+              className="relative rounded-xl shadow-2xl border-4 border-white"
+            />
+          </div>
+          <div>
+            <h2 className="text-3xl font-display font-bold uppercase text-gray-900 mb-4">
+              Request a Same-Day Quote
+            </h2>
+            <p className="text-gray-600 mb-8">
+              Tell us about your project and we will confirm pricing, delivery
+              timing, and site requirements.
+            </p>
+            <InquiryForm />
           </div>
         </div>
       </section>
@@ -107,47 +238,52 @@ export default function Home() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-primary font-bold tracking-widest uppercase mb-2">Why Choose Us</h2>
-              <h3 className="text-4xl font-display font-bold text-white mb-8">Built on Reliability & Trust</h3>
-              
+              <h2 className="text-primary font-bold tracking-widest uppercase mb-2">
+                Why Choose Us
+              </h2>
+              <h3 className="text-4xl font-display font-bold text-white mb-8">
+                Built on reliability & clean delivery
+              </h3>
+
               <div className="space-y-8">
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 bg-gray-800 p-3 rounded-lg h-fit">
-                    <Clock className="w-8 h-8 text-primary" />
+                {[
+                  {
+                    title: "Fast & Reliable Delivery",
+                    copy:
+                      "We keep your project moving with quick scheduling and clean placement.",
+                    icon: <Clock className="w-8 h-8 text-primary" />,
+                  },
+                  {
+                    title: "Transparent Pricing",
+                    copy:
+                      "Flat-rate pricing with clear weight limits and no surprise add-ons.",
+                    icon: <DollarSign className="w-8 h-8 text-primary" />,
+                  },
+                  {
+                    title: "Fully Insured & Safe",
+                    copy:
+                      "Skilled operators, insured crews, and safe jobsite practices.",
+                    icon: <ShieldCheck className="w-8 h-8 text-primary" />,
+                  },
+                ].map((item) => (
+                  <div key={item.title} className="flex gap-4">
+                    <div className="flex-shrink-0 bg-gray-800 p-3 rounded-lg h-fit">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold mb-2">{item.title}</h4>
+                      <p className="text-gray-400">{item.copy}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">Fast & Reliable Delivery</h4>
-                    <p className="text-gray-400">We understand that time is money. We offer same-day or next-day delivery to keep your project on schedule.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 bg-gray-800 p-3 rounded-lg h-fit">
-                    <DollarSign className="w-8 h-8 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">Transparent Pricing</h4>
-                    <p className="text-gray-400">No hidden fees. Our flat-rate pricing includes delivery, pickup, and disposal up to the weight limit.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 bg-gray-800 p-3 rounded-lg h-fit">
-                    <ShieldCheck className="w-8 h-8 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold mb-2">Fully Insured & Safe</h4>
-                    <p className="text-gray-400">Safety is our priority. Our operators are trained professionals, and we are fully insured for your peace of mind.</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
-            
+
             <div className="relative">
               <div className="absolute -inset-4 bg-primary/20 rounded-xl transform rotate-3"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2132&auto=format&fit=crop" /* Construction worker with clipboard */
-                alt="Professional Team" 
+              <img
+                src={siteImages.sections.homeWhyChoose}
+                alt={siteImageAlts.sections.homeWhyChoose}
                 className="relative rounded-lg shadow-2xl border-4 border-gray-800"
               />
             </div>

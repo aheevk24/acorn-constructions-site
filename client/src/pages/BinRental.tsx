@@ -1,24 +1,25 @@
 import { Link } from "wouter";
 import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PageHero } from "@/components/PageHero";
+import { Seo } from "@/components/Seo";
+import { siteImages, siteImageAlts } from "@/assets/siteImages";
 
 export default function BinRental() {
   return (
     <div className="bg-white">
-      {/* Page Header */}
-      <div className="bg-gray-900 text-white py-20 relative overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://pixabay.com/get/gbe7f5843b9f19c2968abd7a9abfad66d62397d2d31aa89f6766612b883354d7dd0afdaede6637fb708465790f73976d08fbe9043529f150d1e475ecefc58bb20_1280.jpg" /* Dumpster being loaded */
-            alt="Bin Rental" 
-            className="w-full h-full object-cover opacity-30"
-          />
-        </div>
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <h1 className="text-5xl font-display font-bold uppercase mb-4">Bin Rental Services</h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">Reliable waste disposal solutions for homeowners and contractors.</p>
-        </div>
-      </div>
+      <Seo
+        title="Bin Rental Toronto & GTA | Same-Day Delivery | Acorn Constructions"
+        description="Same-day bin rental across Toronto & the GTA with driveway-friendly delivery, clear weight limits, and clean bins for renovations. Call now for a free quote."
+        image={siteImages.hero.binRental}
+      />
+      <PageHero
+        title="Bin Rental Services"
+        subtitle="Reliable waste disposal solutions for homeowners and contractors across Toronto & the GTA."
+        image={siteImages.hero.binRental}
+        alt={siteImageAlts.hero.binRental}
+        eyebrow="Bin Rentals"
+      />
 
       <div className="container mx-auto px-4 py-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
@@ -43,9 +44,9 @@ export default function BinRental() {
             </Link>
           </div>
           <div>
-            <img 
-              src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=2070&auto=format&fit=crop" /* Row of dumpsters */
-              alt="Dumpsters" 
+            <img
+              src={siteImages.sections.binRentalDetail}
+              alt={siteImageAlts.sections.binRentalDetail}
               className="rounded-lg shadow-xl"
             />
           </div>

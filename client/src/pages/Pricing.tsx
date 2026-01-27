@@ -2,6 +2,9 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageHero } from "@/components/PageHero";
+import { Seo } from "@/components/Seo";
+import { siteImages, siteImageAlts } from "@/assets/siteImages";
 
 export default function Pricing() {
   const binPricing = [
@@ -14,10 +17,18 @@ export default function Pricing() {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <div className="bg-gray-900 text-white py-16 text-center">
-        <h1 className="text-4xl font-display font-bold uppercase">Transparent Pricing</h1>
-        <p className="text-gray-300 mt-2">No hidden fees. Honest rates.</p>
-      </div>
+      <Seo
+        title="Bin Rental Pricing Toronto & GTA | Transparent Rates | Acorn Constructions"
+        description="Transparent bin rental pricing in Toronto & the GTA with flat rates, clear weight limits, and no surprises for every size. Get a free quote or call today."
+        image={siteImages.hero.pricing}
+      />
+      <PageHero
+        title="Transparent Pricing"
+        subtitle="Clear rates for bin rentals with honest, upfront pricing."
+        image={siteImages.hero.pricing}
+        alt={siteImageAlts.hero.pricing}
+        eyebrow="Pricing"
+      />
 
       <div className="container mx-auto px-4 py-12">
         
