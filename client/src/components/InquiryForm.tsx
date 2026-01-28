@@ -19,9 +19,9 @@ const inquirySchema = z.object({
   serviceNeeded: z.string().min(1, "Service needed is required."),
   binSize: z.string().optional(),
   materialType: z.string().optional(),
-  deliveryDate: z.string().optional(),
-  pickupDate: z.string().optional(),
-  notes: z.string().optional(),
+  preferredDeliveryDate: z.string().optional(),
+  preferredPickupDate: z.string().optional(),
+  additionalNotes: z.string().optional(),
 });
 
 type InquiryFormValues = z.infer<typeof inquirySchema>;
@@ -41,9 +41,9 @@ export function InquiryForm() {
       serviceNeeded: "",
       binSize: "",
       materialType: "",
-      deliveryDate: "",
-      pickupDate: "",
-      notes: "",
+      preferredDeliveryDate: "",
+      preferredPickupDate: "",
+      additionalNotes: "",
     },
   });
 
@@ -64,9 +64,9 @@ export function InquiryForm() {
       serviceNeeded: data.serviceNeeded,
       binSize: data.binSize || "",
       materialType: data.materialType || "",
-      deliveryDate: data.deliveryDate || "",
-      pickupDate: data.pickupDate || "",
-      notes: data.notes || "",
+      preferredDeliveryDate: data.preferredDeliveryDate || "",
+      preferredPickupDate: data.preferredPickupDate || "",
+      additionalNotes: data.additionalNotes || "",
     };
 
     try {
@@ -269,12 +269,17 @@ export function InquiryForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="deliveryDate"
+                name="preferredDeliveryDate"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Preferred Delivery Date</FormLabel>
                     <FormControl>
-                      <Input type="date" {...field} name="deliveryDate" value={field.value || ""} />
+                      <Input
+                        type="date"
+                        {...field}
+                        name="preferredDeliveryDate"
+                        value={field.value || ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -282,12 +287,17 @@ export function InquiryForm() {
               />
               <FormField
                 control={form.control}
-                name="pickupDate"
+                name="preferredPickupDate"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Preferred Pickup Date</FormLabel>
                     <FormControl>
-                      <Input type="date" {...field} name="pickupDate" value={field.value || ""} />
+                      <Input
+                        type="date"
+                        {...field}
+                        name="preferredPickupDate"
+                        value={field.value || ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -297,7 +307,7 @@ export function InquiryForm() {
 
             <FormField
               control={form.control}
-              name="notes"
+              name="additionalNotes"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Additional Notes</FormLabel>
@@ -306,7 +316,7 @@ export function InquiryForm() {
                       placeholder="Tell us about your project, access restrictions, or special requirements..." 
                       className="resize-none"
                       {...field}
-                      name="notes"
+                      name="additionalNotes"
                       value={field.value || ""} 
                     />
                   </FormControl>
