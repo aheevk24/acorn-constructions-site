@@ -1,11 +1,18 @@
 import { useEffect } from "react";
 
+type FaqItem = {
+  question: string;
+  answer: string;
+};
+
 type SeoProps = {
   title: string;
   description: string;
   image: string;
   url?: string;
+  canonicalUrl?: string;
   type?: string;
+  faqItems?: FaqItem[];
 };
 
 function setMetaTag(name: string, content: string, useProperty = false) {
@@ -20,6 +27,24 @@ function setMetaTag(name: string, content: string, useProperty = false) {
   tag.setAttribute("content", content);
 }
 
+function setLinkTag(rel: string, href: string) {
+  const selector = `link[rel="${rel}"]`;
+  let tag = document.head.querySelector<HTMLLinkElement>(selector);
+  if (!tag) {
+    tag = document.createElement("link");
+    tag.setAttribute("rel", rel);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute("href", href);
+}
+
+function removeJsonLd(id: string) {
+  const script = document.head.querySelector<HTMLScriptElement>(`script[data-jsonld="${id}"]`);
+  if (script) {
+    script.remove();
+  }
+}
+
 function setJsonLd(id: string, payload: Record<string, unknown>) {
   const selector = `script[data-jsonld="${id}"]`;
   let script = document.head.querySelector<HTMLScriptElement>(selector);
@@ -32,7 +57,15 @@ function setJsonLd(id: string, payload: Record<string, unknown>) {
   script.textContent = JSON.stringify(payload);
 }
 
-export function Seo({ title, description, image, url, type = "website" }: SeoProps) {
+export function Seo({
+  title,
+  description,
+  image,
+  url,
+  canonicalUrl,
+  type = "website",
+  faqItems,
+}: SeoProps) {
   useEffect(() => {
     document.title = title;
     setMetaTag("description", description);
@@ -44,31 +77,48 @@ export function Seo({ title, description, image, url, type = "website" }: SeoPro
     setMetaTag("twitter:title", title);
     setMetaTag("twitter:description", description);
     setMetaTag("twitter:image", image);
+
     const resolvedUrl = url || window.location.href;
     setMetaTag("og:url", resolvedUrl, true);
+    setLinkTag("canonical", canonicalUrl || resolvedUrl);
+
     const origin = window.location.origin;
     setJsonLd("local-business", {
       "@context": "https://schema.org",
-      "@type": "ConstructionCompany",
+      "@type": "LocalBusiness",
       name: "Acorn Constructions Inc.",
-      telephone: "(416) 305-3301",
+      telephone: "+1-416-305-3301",
       email: "acorn.inc3@gmail.com",
       url: origin,
+      image,
+      priceRange: "$$",
       areaServed: [
-        "Toronto",
-        "Mississauga",
-        "Brampton",
-        "Vaughan",
         "Richmond Hill",
         "Markham",
+        "Vaughan",
         "Scarborough",
-        "Etobicoke",
         "North York",
-        "Oakville",
-        "Burlington",
-        "Milton",
+        "Aurora",
+        "Newmarket",
+        "Toronto",
+        "GTA",
       ],
-      serviceType: ["Bin Rental", "Demolition", "Excavation"],
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+          ],
+          opens: "07:00",
+          closes: "19:00",
+        },
+      ],
+      sameAs: [],
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Services",
@@ -79,16 +129,33 @@ export function Seo({ title, description, image, url, type = "website" }: SeoPro
           },
           {
             "@type": "Offer",
-            itemOffered: { "@type": "Service", name: "Demolition" },
+            itemOffered: { "@type": "Service", name: "Concrete Bin Rental" },
           },
           {
             "@type": "Offer",
-            itemOffered: { "@type": "Service", name: "Excavation" },
+            itemOffered: { "@type": "Service", name: "Excavation Services" },
           },
         ],
       },
     });
-  }, [description, image, title, type, url]);
+
+    if (faqItems && faqItems.length > 0) {
+      setJsonLd("pricing-faq", {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqItems.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      });
+    } else {
+      removeJsonLd("pricing-faq");
+    }
+  }, [canonicalUrl, description, faqItems, image, title, type, url]);
 
   return null;
 }

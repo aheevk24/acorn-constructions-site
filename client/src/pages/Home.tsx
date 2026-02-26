@@ -24,6 +24,10 @@ import {
 import { Seo } from "@/components/Seo";
 import { HeroBackground } from "@/components/HeroBackground";
 import { siteImages, siteImageAlts } from "@/assets/siteImages";
+import {
+  CITY_CONFIGS,
+  SERVICE_CONFIGS,
+} from "@/data/cityServicePages";
 
 export default function Home() {
   const fadeIn = {
@@ -204,6 +208,41 @@ export default function Home() {
               icon={<Shovel className="w-6 h-6" />}
               link="/excavation"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Service Areas */}
+      <section className="py-20 bg-white border-t border-gray-200">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mb-10">
+            <h2 className="text-primary font-bold tracking-widest uppercase mb-2">
+              Service Areas
+            </h2>
+            <h3 className="text-4xl font-display font-bold text-gray-900 mb-4">
+              Local landing pages for GTA service coverage
+            </h3>
+            <p className="text-gray-600">
+              Explore service-specific pages for each city to get local details, pricing support, and fast booking options.
+            </p>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {CITY_CONFIGS.map((city) => (
+              <div key={city.slug} className="rounded-xl border border-gray-200 p-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">{city.name}</h3>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {SERVICE_CONFIGS.map((service) => (
+                    <Link
+                      key={`${city.slug}-${service.slugPrefix}`}
+                      href={`/${service.slugPrefix}-${city.slug}`}
+                      className="text-primary font-semibold hover:underline"
+                    >
+                      {service.titlePrefix} {city.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

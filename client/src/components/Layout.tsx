@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useState } from "react";
-import { Menu, X, Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
+import { Menu, X, Phone, Mail, MapPin, Facebook, Instagram, MessageSquareText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@assets/logo.jpeg"; // If this file is a phone screenshot with black bars, we crop via CSS in the header
 
@@ -146,7 +146,7 @@ export function Layout({ children }: LayoutProps) {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow">
+      <main className="flex-grow pb-20 md:pb-0">
         {children}
       </main>
 
@@ -247,14 +247,27 @@ export function Layout({ children }: LayoutProps) {
         </div>
       </footer>
 
-      {/* Floating Call Button Mobile */}
-      <a
-        href="tel:4163053301"
-        aria-label="Call Acorn Constructions"
-        className="md:hidden fixed bottom-6 right-6 z-50 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors"
-      >
-        <Phone className="w-6 h-6" />
-      </a>
+      {/* Mobile Sticky Contact Bar */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-black/95 backdrop-blur border-t border-white/10 p-3">
+        <div className="grid grid-cols-2 gap-3">
+          <a
+            href="tel:4163053301"
+            aria-label="Call Acorn Constructions"
+            className="flex items-center justify-center gap-2 rounded-md bg-primary py-3 text-sm font-bold uppercase tracking-wide text-white"
+          >
+            <Phone className="w-4 h-4" />
+            Call Now
+          </a>
+          <a
+            href="sms:+14163053301?body=Hi%20Acorn%2C%20I%20need%20a%20quote.%20I%20can%20text%20a%20photo."
+            aria-label="Text Acorn Constructions"
+            className="flex items-center justify-center gap-2 rounded-md border border-white/30 py-3 text-sm font-bold uppercase tracking-wide text-white"
+          >
+            <MessageSquareText className="w-4 h-4" />
+            Text Us
+          </a>
+        </div>
+      </div>
     </div>
   );
 }

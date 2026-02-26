@@ -14,6 +14,8 @@ import ServiceAreas from "@/pages/ServiceAreas";
 import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
 import ThankYou from "@/pages/ThankYou";
+import CityServiceLanding from "@/pages/CityServiceLanding";
+import { CITY_SERVICE_LANDING_ENTRIES } from "@/data/cityServicePages";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -31,6 +33,11 @@ function Router() {
         <Route path="/privacy" component={Privacy} />
         <Route path="/terms" component={Terms} />
         <Route path="/thank-you" component={ThankYou} />
+        {CITY_SERVICE_LANDING_ENTRIES.map((entry) => (
+          <Route key={entry.slug} path={`/${entry.slug}`}>
+            {() => <CityServiceLanding city={entry.city} service={entry.service} />}
+          </Route>
+        ))}
         <Route component={NotFound} />
       </Switch>
     </Layout>
