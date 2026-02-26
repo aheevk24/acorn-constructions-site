@@ -220,10 +220,10 @@ export default function Home() {
               Service Areas
             </h2>
             <h3 className="text-4xl font-display font-bold text-gray-900 mb-4">
-              Local landing pages for GTA service coverage
+              Service Areas Across Toronto & the GTA
             </h3>
             <p className="text-gray-600">
-              Explore service-specific pages for each city to get local details, pricing support, and fast booking options.
+              Find your city to view local bin rental, demolition, and excavation coverage with fast dispatch and clear pricing.
             </p>
           </div>
           <div className="grid gap-6 lg:grid-cols-2">

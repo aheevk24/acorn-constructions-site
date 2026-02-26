@@ -1,6 +1,6 @@
 import heroHome from "./photos/hero-home.jpg";
 import heroBinRental from "./photos/hero-bin-rental.jpg";
-import heroDemolition from "./photos/hero-demolition.jpg";
+const heroDemolition = "/images/demolition-excavator-gta.jpg";
 import heroExcavation from "./photos/hero-excavation.jpg";
 import heroPricing from "./photos/hero-pricing.jpg";
 import heroAbout from "./photos/hero-about.jpg";
@@ -10,7 +10,7 @@ import binRentalDetail from "./photos/bin-rental-detail.jpg";
 import demolitionDetail from "./photos/demolition-detail.jpg";
 import excavationDetail from "./photos/excavation-detail.jpg";
 import homeServicesBinRental from "./photos/home-services-bin-rental.jpg";
-import homeServicesDemolition from "./photos/home-services-demolition.jpg";
+const homeServicesDemolition = "/images/demolition-excavator-gta.jpg";
 import homeServicesExcavation from "./photos/home-services-excavation.jpg";
 import homeWhyChoose from "./photos/home-why-choose.jpg";
 import serviceAreasMap from "./photos/service-areas-map.jpg";

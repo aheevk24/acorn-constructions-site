@@ -5,27 +5,31 @@ import { Seo } from "@/components/Seo";
 import { siteImages, siteImageAlts } from "@/assets/siteImages";
 
 export default function Demolition() {
+  const demolitionHeroImage = siteImages.hero.demolition;
+  const demolitionHeroAlt = siteImageAlts.hero.demolition;
+
   return (
     <div className="bg-white">
       <Seo
         title="Demolition Services Toronto & GTA | Licensed & Insured | Acorn Constructions"
         description="Licensed, insured demolition in Toronto & the GTA for interior gut-outs and full tear-downs with safe cleanup and haul-away. Call for a free quote today."
-        image={siteImages.hero.demolition}
+        image={demolitionHeroImage}
       />
       <PageHero
         title="Demolition Services"
         subtitle="Safe, efficient, and precise demolition for residential and commercial projects."
-        image={siteImages.hero.demolition}
-        alt={siteImageAlts.hero.demolition}
+        image={demolitionHeroImage}
+        alt={demolitionHeroAlt}
         eyebrow="Demolition"
+        priority
       />
 
       <div className="container mx-auto px-4 py-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1">
             <img
-              src={siteImages.sections.demolitionDetail}
-              alt={siteImageAlts.sections.demolitionDetail}
+              src={demolitionHeroImage}
+              alt={demolitionHeroAlt}
               className="rounded-lg shadow-xl"
             />
           </div>

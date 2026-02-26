@@ -181,6 +181,48 @@ export const CITY_CONFIGS: CityConfig[] = [
       "Builders and homeowners in Newmarket choose us for practical advice, responsive dispatch, and fair overage policies.",
     nearby: ["aurora", "richmond-hill"],
   },
+  {
+    name: "Ajax",
+    slug: "ajax",
+    neighborhoods: ["Pickering Village", "Southwood", "Duffins Bay", "Audley North"],
+    localProjectFocus:
+      "Ajax projects often combine interior renovations with exterior concrete and landscaping work, which benefits from staged disposal planning.",
+    routingReality:
+      "We plan around 401 corridor congestion and local peak windows to keep delivery and pickup timing dependable.",
+    disposalFlow:
+      "Loads are verified by material stream so clean fill stays compliant and mixed waste avoids avoidable re-sorting charges.",
+    contractorAngle:
+      "Contractors in Ajax rely on our fast dispatch updates, straightforward pricing, and practical support when timelines shift.",
+    nearby: ["pickering", "oshawa"],
+  },
+  {
+    name: "Oshawa",
+    slug: "oshawa",
+    neighborhoods: ["Donevan", "Taunton", "Vanier", "Windfields"],
+    localProjectFocus:
+      "Oshawa jobs commonly include phased demolition, excavation, and rebuild work where reliable haul cycles keep crews productive.",
+    routingReality:
+      "Dispatch routes are set around Highway 401 and major arterial traffic to reduce delays during active site windows.",
+    disposalFlow:
+      "Material separation is confirmed before pickup so concrete, dirt, and mixed debris follow the correct disposal channel.",
+    contractorAngle:
+      "Oshawa builders choose us for responsive scheduling, clear load rules, and billing that stays aligned with quoted scope.",
+    nearby: ["ajax", "pickering"],
+  },
+  {
+    name: "Pickering",
+    slug: "pickering",
+    neighborhoods: ["Bay Ridges", "Rougemount", "West Shore", "Liverpool"],
+    localProjectFocus:
+      "Pickering properties often need clean-fill handling for concrete and soil alongside renovation debris from interior work.",
+    routingReality:
+      "We coordinate around Kingston Road and 401 traffic patterns so crews can plan around reliable delivery windows.",
+    disposalFlow:
+      "Dedicated bins and clear loading guidance help keep material classes separated and disposal costs predictable.",
+    contractorAngle:
+      "Contractor teams in Pickering value our quick confirmations, transparent terms, and smooth swap coordination.",
+    nearby: ["scarborough", "ajax"],
+  },
 ];
 
 export type LandingEntry = {
